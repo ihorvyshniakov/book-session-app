@@ -8,6 +8,12 @@ import { useEffect, useRef } from 'react'
 export default function HomePage() {
 	const modal = useRef<ModalHandle>(null)
 
+	function onClose() {
+		if (modal.current) {
+			modal.current.close()
+		}
+	}
+
 	useEffect(() => {
 		if (modal.current) {
 			modal.current.open()
@@ -27,9 +33,9 @@ export default function HomePage() {
 						questions and problems. We are a community of React
 						developers who want to help each other succeed.
 					</p>
-					<Modal ref={modal}>
+					<Modal ref={modal} onClose={onClose}>
 						<h1>Naruto Modal-Jutsu</h1>
-						<Button>Close</Button>
+						<Button onClick={onClose}>Close</Button>
 					</Modal>
 				</div>
 			</section>

@@ -1,40 +1,42 @@
-import {
-	type ComponentPropsWithRef,
-	forwardRef,
-	ReactNode,
-	useImperativeHandle,
-	useRef
-} from 'react'
+import { forwardRef, type ReactNode, useImperativeHandle, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 export type ModalHandle = {
 	open: () => void
+	close: () => void
 }
 
-type ModalProp = ComponentPropsWithRef<'dialog'> & {
+type ModalProp = {
 	children: ReactNode
+	onClose: () => void
 }
 
-const Modal = forwardRef((props: ModalProp, ref) => {
-	const { children } = props
-	const dialogRef = useRef<HTMLDialogElement>(null)
+const Modal = forwardRef<ModalHandle, ModalProp>(
+	({ children, onClose }: ModalProp, ref) => {
+		const dialogRef = useRef<HTMLDialogElement>(null)
 
-	useImperativeHandle(ref, () => {
-		return {
-			open: () => {
-				if (dialogRef.current) {
-					dialogRef.current.showModal()
+		useImperativeHandle(ref, () => {
+			return {
+				open: () => {
+					if (dialogRef.current) {
+						dialogRef.current.showModal()
+					}
+				},
+				close: () => {
+					if (dialogRef.current) {
+						dialogRef.current.close()
+					}
 				}
 			}
-		}
-	})
+		})
 
-	return createPortal(
-		<dialog ref={dialogRef} className='modal' {...props}>
-			{children}
-		</dialog>,
-		document.getElementById('modal-root')!
-	)
-})
+		return createPortal(
+			<dialog ref={dialogRef} className='modal' onClose={onClose}>
+				{children}
+			</dialog>,
+			document.getElementById('modal-root')!
+		)
+	}
+)
 
 export default Modal
