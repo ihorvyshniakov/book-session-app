@@ -1,28 +1,44 @@
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { Link, type LinkProps } from 'react-router-dom'
 
-type ButtonProps = {
-	to?: string
+type BaseProps = {
 	textOnly?: boolean
 	children: ReactNode
-} & ComponentPropsWithoutRef<'button'> &
-	LinkProps
+}
 
-const Button = ({ to, textOnly, children, ...props }: ButtonProps) => {
-	const myClasses = `button${textOnly ? ' button--text-only' : ''}`
+type ButtonProps = BaseProps &
+	ComponentPropsWithoutRef<'button'> & { to?: never }
+type ButtonLinkProps = BaseProps & LinkProps & { to: string }
 
-	if (to === undefined) {
+function isRouterLink(
+	props: ButtonProps | ButtonLinkProps
+): props is ButtonLinkProps {
+	return 'to' in props
+}
+
+const Button = (props: ButtonProps | ButtonLinkProps) => {
+	if (isRouterLink(props)) {
+		const { to, textOnly, children, ...otherProps } = props
+
 		return (
-			<button className={myClasses} {...props}>
+			<Link
+				to={to}
+				className={`button${textOnly ? ' button--text-only' : ''}`}
+				{...otherProps}
+			>
 				{children}
-			</button>
+			</Link>
 		)
 	}
 
+	const { textOnly, children, ...otherProps } = props
 	return (
-		<Link to={to} className={myClasses} {...props}>
+		<button
+			className={`button${textOnly ? ' button--text-only' : ''}`}
+			{...otherProps}
+		>
 			{children}
-		</Link>
+		</button>
 	)
 }
 

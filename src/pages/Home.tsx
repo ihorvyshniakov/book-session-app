@@ -17,9 +17,7 @@ export default function HomePage() {
 						questions and problems. We are a community of React
 						developers who want to help each other succeed.
 					</p>
-					<Button to='boho' textOnly={true}>
-						Click me!
-					</Button>
+					<Button to='boho'>Click me!</Button>
 				</div>
 			</section>
 
