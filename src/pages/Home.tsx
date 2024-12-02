@@ -2,6 +2,7 @@ import studentsImg from '../assets/students.jpg'
 import listImg from '../assets/list.jpg'
 import certificateImg from '../assets/certificate.jpg'
 import Button from '../components/UI/Button'
+import Input from '../components/UI/Input'
 
 export default function HomePage() {
 	return (
@@ -18,6 +19,7 @@ export default function HomePage() {
 						developers who want to help each other succeed.
 					</p>
 					<Button to='boho'>Click me!</Button>
+					<Input id='some' label='some' />
 				</div>
 			</section>
 
