@@ -2,9 +2,18 @@ import studentsImg from '../assets/students.jpg'
 import listImg from '../assets/list.jpg'
 import certificateImg from '../assets/certificate.jpg'
 import Button from '../components/UI/Button'
-import Modal from '../components/UI/Modal'
+import Modal, { type ModalHandle } from '../components/UI/Modal'
+import { useEffect, useRef } from 'react'
 
 export default function HomePage() {
+	const modal = useRef<ModalHandle>(null)
+
+	useEffect(() => {
+		if (modal.current) {
+			modal.current.open()
+		}
+	}, [])
+
 	return (
 		<main id='home-page'>
 			<h2>Our Mission: Your Success</h2>
@@ -18,8 +27,9 @@ export default function HomePage() {
 						questions and problems. We are a community of React
 						developers who want to help each other succeed.
 					</p>
-					<Modal>
+					<Modal ref={modal}>
 						<h1>Naruto Modal-Jutsu</h1>
+						<Button>Close</Button>
 					</Modal>
 				</div>
 			</section>
