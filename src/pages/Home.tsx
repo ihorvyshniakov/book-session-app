@@ -2,7 +2,7 @@ import studentsImg from '../assets/students.jpg'
 import listImg from '../assets/list.jpg'
 import certificateImg from '../assets/certificate.jpg'
 import Button from '../components/UI/Button'
-import Input from '../components/UI/Input'
+import Modal from '../components/UI/Modal'
 
 export default function HomePage() {
 	return (
@@ -18,8 +18,9 @@ export default function HomePage() {
 						questions and problems. We are a community of React
 						developers who want to help each other succeed.
 					</p>
-					<Button to='boho'>Click me!</Button>
-					<Input id='some' label='some' />
+					<Modal>
+						<h1>Naruto Modal-Jutsu</h1>
+					</Modal>
 				</div>
 			</section>
 
