@@ -1,25 +1,8 @@
 import studentsImg from '../assets/students.jpg'
 import listImg from '../assets/list.jpg'
 import certificateImg from '../assets/certificate.jpg'
-import Button from '../components/UI/Button'
-import Modal, { type ModalHandle } from '../components/UI/Modal'
-import { useEffect, useRef } from 'react'
 
 export default function HomePage() {
-	const modal = useRef<ModalHandle>(null)
-
-	function onClose() {
-		if (modal.current) {
-			modal.current.close()
-		}
-	}
-
-	useEffect(() => {
-		if (modal.current) {
-			modal.current.open()
-		}
-	}, [])
-
 	return (
 		<main id='home-page'>
 			<h2>Our Mission: Your Success</h2>
