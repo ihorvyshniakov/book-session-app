@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import Button from '../UI/Button'
 import Modal, { type ModalHandle } from '../UI/Modal'
+// import { useSessionsContext } from '../../store/sessions-context'
 
 type UpcomingSessions = {
 	onClose: () => void
@@ -8,6 +9,7 @@ type UpcomingSessions = {
 
 const UpcomingSessions = ({ onClose }: UpcomingSessions) => {
 	const modal = useRef<ModalHandle>(null)
+	// const { upcomingSessions } = useSessionsContext()
 
 	useEffect(() => {
 		if (modal.current) {
