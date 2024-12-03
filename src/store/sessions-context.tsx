@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from 'react'
+import { createContext, useContext, useReducer, type ReactNode } from 'react'
 
 export type Session = {
 	id: string
@@ -26,11 +26,40 @@ export const useSessionsContext = () => {
 
 	if (sessionsCxt === null) {
 		throw new Error(
-			'SessionsContext is null - that should not be the case!'
+			'useSessionsContext must be used within a SessionsContextProvider'
 		)
 	}
 
 	return sessionsCxt
+}
+
+type BookSessionAction = {
+	type: 'BOOK_SESSION'
+	session: Session
+}
+
+type CancelSessionAction = {
+	type: 'CANCEL_SESSION'
+	sessionId: string
+}
+
+type Actions = BookSessionAction | CancelSessionAction
+
+function sessionsReducer(state: SessionState, action: Actions) {
+	if (action.type === 'BOOK_SESSION') {
+		return {
+			upcomingSessions: [...state.upcomingSessions, { ...action.session }]
+		}
+	}
+	if (action.type === 'CANCEL_SESSION') {
+		return {
+			upcomingSessions: state.upcomingSessions.filter(
+				session => session.id !== action.sessionId
+			)
+		}
+	}
+
+	return state
 }
 
 export default function SessionsContextProvider({
@@ -38,10 +67,18 @@ export default function SessionsContextProvider({
 }: {
 	children: ReactNode
 }) {
+	const [sessionsState, dispatch] = useReducer(sessionsReducer, {
+		upcomingSessions: []
+	})
+
 	const value: SessionContextValue = {
-		upcomingSessions: [],
-		bookSession() {},
-		cancelSession() {}
+		upcomingSessions: sessionsState.upcomingSessions,
+		bookSession: (session: Session) => {
+			dispatch({ type: 'BOOK_SESSION', session })
+		},
+		cancelSession: sessionId => {
+			dispatch({ type: 'CANCEL_SESSION', sessionId })
+		}
 	}
 
 	return (

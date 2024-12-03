@@ -2,26 +2,27 @@ import { type FormEvent, useEffect, useRef } from 'react'
 import Modal, { type ModalHandle } from '../UI/Modal'
 import Button from '../UI/Button'
 import Input from '../UI/Input'
+import { type Session, useSessionsContext } from '../../store/sessions-context'
 
 type BookSessionProp = {
-	session: {
-		id: string
-		title: string
-		summary: string
-		image: string
-	}
+	session: Session
 	onDone: () => void
 }
 
 const BookSession = ({ session, onDone }: BookSessionProp) => {
 	const modal = useRef<ModalHandle>(null)
+	const { bookSession } = useSessionsContext()
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
+
+		// get form values
 		const formValues = new FormData(event.currentTarget)
 		const data = Object.fromEntries(formValues)
 		console.log(data)
-		// sessionsCtx.bookSession(session)
+
+		// add session to state
+		bookSession(session)
 		onDone()
 	}
 
