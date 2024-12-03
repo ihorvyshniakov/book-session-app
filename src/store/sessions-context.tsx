@@ -47,6 +47,14 @@ type Actions = BookSessionAction | CancelSessionAction
 
 function sessionsReducer(state: SessionState, action: Actions) {
 	if (action.type === 'BOOK_SESSION') {
+		const isSessionExist = state.upcomingSessions.some(
+			session => session.id === action.session.id
+		)
+
+		if (isSessionExist) {
+			return state
+		}
+
 		return {
 			upcomingSessions: [...state.upcomingSessions, { ...action.session }]
 		}
