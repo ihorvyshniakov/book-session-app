@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import Button from '../UI/Button'
 import UpcomingSessions from '../Sessions/UpcomingSessions'
 
 const Header = () => {
-	const { pathname } = useLocation()
 	const [upcomingSessionsVisible, setUpcomingSessionsVisible] =
 		useState(false)
 
@@ -26,20 +25,24 @@ const Header = () => {
 			<nav>
 				<ul>
 					<li>
-						<Link
-							className={pathname === '/' ? 'active' : ''}
+						<NavLink
+							className={({ isActive }) =>
+								isActive ? 'active' : ''
+							}
 							to='/'
 						>
 							Our Mission
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link
-							className={pathname === '/sessions' ? 'active' : ''}
+						<NavLink
+							className={({ isActive }) =>
+								isActive ? 'active' : ''
+							}
 							to='/sessions'
 						>
 							Browse Sessions
-						</Link>
+						</NavLink>
 					</li>
 					<li>
 						<Button onClick={showUpcomingSessions}>
