@@ -33,10 +33,6 @@ export default function HomePage() {
 						questions and problems. We are a community of React
 						developers who want to help each other succeed.
 					</p>
-					<Modal ref={modal} onClose={onClose}>
-						<h1>Naruto Modal-Jutsu</h1>
-						<Button onClick={onClose}>Close</Button>
-					</Modal>
 				</div>
 			</section>
 
